@@ -1,37 +1,37 @@
 """
-Adapted from keras example cifar10_cnn.py
-Train ResNet-18 on the CIFAR10 small images dataset.
+Train ResNet-50 on the MEDICO2018 - images dataset.
 
 GPU run command with Theano backend (with TensorFlow, the GPU is automatically used):
     THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 python cifar10.py
 """
 from __future__ import print_function
-from keras.datasets import cifar10
+# from keras.datasets import cifar10
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import np_utils
 from keras.callbacks import ReduceLROnPlateau, CSVLogger, EarlyStopping
 
 import numpy as np
 import resnet
-
+import pickle
 
 lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1), cooldown=0, patience=5, min_lr=0.5e-6)
 early_stopper = EarlyStopping(min_delta=0.001, patience=10)
 csv_logger = CSVLogger('resnet18_cifar10.csv')
 
 batch_size = 32
-nb_classes = 10
+nb_classes = 4
 nb_epoch = 200
 data_augmentation = True
 
 # input image dimensions
-img_rows, img_cols = 32, 32
+img_rows, img_cols = 224, 224
 # The CIFAR10 images are RGB.
 img_channels = 3
 
 # The data, shuffled and split between train and test sets:
-(X_train, y_train), (X_test, y_test) = cifar10.load_data()
-print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
+fi = open('medico_dataset.pickle',"rb")
+(X_train, y_train), (X_test, y_test) = pickle.load(fi)
+print('Medico data set loaded!')
 # Convert class vectors to binary class matrices.
 Y_train = np_utils.to_categorical(y_train, nb_classes)
 Y_test = np_utils.to_categorical(y_test, nb_classes)
@@ -46,7 +46,7 @@ X_test -= mean_image
 X_train /= 128.
 X_test /= 128.
 
-model = resnet.ResnetBuilder.build_resnet_18((img_channels, img_rows, img_cols), nb_classes)
+model = resnet.ResnetBuilder.build_resnet_50((img_channels, img_rows, img_cols), nb_classes)
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])

@@ -12,7 +12,6 @@ def _test_model_compile(model):
         model.compile(loss="categorical_crossentropy", optimizer="sgd")
         assert True, "Failed to compile with '{}' dim ordering".format(ordering)
 
-
 def test_resnet18():
     model = ResnetBuilder.build_resnet_18((3, 224, 224), 100)
     _test_model_compile(model)
@@ -53,4 +52,5 @@ def test_custom2():
 
 
 if __name__ == '__main__':
+    test_resnet50()
     pytest.main([__file__])
