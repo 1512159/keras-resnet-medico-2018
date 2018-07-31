@@ -84,3 +84,4 @@ else:
                         validation_data=(X_test, Y_test),
                         epochs=nb_epoch, verbose=1, max_q_size=100,
                         callbacks=[lr_reducer, early_stopper, csv_logger])
+    model.save_weights('result.h5')
