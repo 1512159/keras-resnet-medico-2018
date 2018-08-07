@@ -7,7 +7,8 @@ WIDTH = 224
 HEIGHT = 224
 test_data_set = ['00']
 train_data_set = ['01','02','03','04']
-inp_dir = 'medico_dataset/'
+inp_dir = '../Prepare_dataset_resnet/output/'
+out_pickle_file = 'medico_v2_ensophagitis_normal_z_line_dataset.pickle'
 
 imgs_train = []
 imgs_test = []
@@ -48,6 +49,6 @@ print('y_test_shape: ',y_test.shape)
 print('X_train_shape: ',X_train.shape)
 print('y_train_shape: ',y_train.shape)
 
-of = open('medico_dataset.pickle',"wb")
+of = open(out_pickle_file,"wb")
 pickle.dump(((X_train,y_train),(X_test,y_test)),of)
 of.close()
