@@ -19,6 +19,11 @@ lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1), cooldown=0, patience=5, min_
 early_stopper = EarlyStopping(min_delta=0.001, patience=10)
 csv_logger = CSVLogger('resnet18_medico2018.csv')
 
+######
+
+input_pickle_data = 'medico_v2_ensophagitis_normal_z_line_dataset.pickle'
+
+######
 batch_size = 32
 nb_classes = 4
 nb_epoch = 200
@@ -34,7 +39,7 @@ filepath="weights.best.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
 
 # The data, shuffled and split between train and test sets:
-fi = open('medico_dataset.pickle',"rb")
+fi = open(input_pickle_data,"rb")
 (X_train, y_train), (X_test, y_test) = pickle.load(fi)
 print('Medico data set loaded!')
 
